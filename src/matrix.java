@@ -74,9 +74,9 @@ class matrix
 			}
 	}
 
-	public static void showMatrix(char comm)//显示结果，O为原始邻接矩阵，P为r次幂矩阵
+	public static void showMatrix(char string)//显示结果，O为原始邻接矩阵，P为r次幂矩阵
 	{
-		if (comm == 'O')
+		if (string == 'O')
 		{
 			for (int i = 0; i <= mSize - 1; i++)
 				for (int j = 0; j <= mSize - 1; j++)
@@ -87,7 +87,7 @@ class matrix
 						System.out.println(matrix[i][j]);
 				}
 		}
-		else if (comm == 'P')
+		else if (string == 'P')
 		{
 			for (int i = 0; i <= mSize - 1; i++)
 				for (int j = 0; j <= mSize - 1; j++)

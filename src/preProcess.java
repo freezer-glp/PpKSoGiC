@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,7 +14,7 @@ class preProcess
 	static rRadiusGraph rg, c1, c2, show;
 	public static long endTime,startTime;
 	
-	public static void getRradiusGraph(int pm[][], int m[][], int debug)//提取出搜有r半径子图，存于list中，参数pm为r次幂矩阵，m为r-1次幂矩阵
+	public static void getRradiusGraph(int pm[][], int m[][], int debug) throws IOException//提取出搜有r半径子图，存于list中，参数pm为r次幂矩阵，m为r-1次幂矩阵
 	{
 		startTime=System.currentTimeMillis();   //获取开始时间  
 		
@@ -56,6 +57,7 @@ class preProcess
 			{
 				if (debug == 1)
 					System.out.println("i= " + i);
+				
 				for (int k = 0; k <= matrix.mSize - 1; k++)
 					for (int j = 0; j <= matrix.mSize - 1; j++)
 						copyMatrix[k][j] = m[k][j];
@@ -89,6 +91,11 @@ class preProcess
 						copyMatrix[j][j] = 1;
 				rg = null;
 				rg = new rRadiusGraph(2, i, copyMatrix);
+				rg.setVector();
+				System.out.println("vector is:");
+				for(int ss = 0;ss <= 499 ; ss++)
+					System.out.print(rg.keyVector[ss]);
+				System.out.println();
 				list.add(rg);											//将该子图加入list中
 				// System.out.println("size= "+list.size());
 
@@ -165,6 +172,40 @@ class preProcess
 						System.out.println(show.M[i][j]);
 				}
 		}
+	}
+	
+	public static void makePrimeMark()
+	{
+		rRadiusGraph rg = null;
+		int count = -1,primeValue;
+		for(int i = 0; i <= 10000; i++)
+		{
+			if(createPrime.prime[i] == true)
+			{
+				
+				count++; 			//start from 0
+				primeValue = i;
+				if(count <= list.size())
+					rg = list.get(count);
+				for(int j = 0; j <= matrix.mSize-1; j++)
+					for(int k = 0; k <= matrix.mSize-1; k++)
+					{
+						if(rg.M[j][k] == 1)
+							rg.M[j][k] = primeValue;
+						else
+							rg.M[j][k] = 1;
+					}
+				
+				
+			}
+		}
+		
+				
+	}
+	
+//	public static void encode()
+//	{
+//		
 	}
 
 	
