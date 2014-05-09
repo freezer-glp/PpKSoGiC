@@ -12,7 +12,7 @@ class rRadiusGraph
 	int r;							//子图的半径
 	int id;							//子图的编号		
 	int M[][];						//子图的邻接矩阵
-	int keyVector[];				//该子图所含关键词的向量
+	double keyVector[];				//该子图所含关键词的向量
 	public static RandomAccessFile finput = null;
 
 	public rRadiusGraph(int R, int Id, int m[][])
@@ -32,7 +32,7 @@ class rRadiusGraph
 	{
 		finput = new RandomAccessFile("file/key.txt", "rw");
 		int seekNum = 0,keyNum;
-		keyVector =  new int[500];
+		keyVector =  new double[500];
 		for(int i = 0; i <= 499; i++)
 			keyVector[i] = 0;
 		for(int i = 0; i <= matrix.mSize - 1; i++)

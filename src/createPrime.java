@@ -27,11 +27,11 @@ public class createPrime
 					prime[j] = false;
 		}
 		
-		for(int i = 2; i <= 100; i++)
-		{
-			if(prime[i])
-			System.out.print(i+" ");
-		}
+//		for(int i = 2; i <= 100; i++)
+//		{
+//			if(prime[i])
+//			System.out.print(i+" ");
+//		}
 		
 		
 	}

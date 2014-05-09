@@ -24,7 +24,7 @@ public class PpKSoGiC
 		preProcess.makePrimeMark();
 		//preProcess.showList();
 		preProcess.encode();
-		//preProcess.showList();
+		preProcess.showList();
 	
 	
 	}

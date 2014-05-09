@@ -190,7 +190,7 @@ class preProcess
 				primeValue = i;
 				if (count <= list.size() - 1)
 				{
-					System.out.println("primevalue = "+primeValue);
+					System.out.println("primevalue = " + primeValue);
 					rg = list.get(count);
 					for (int j = 0; j <= matrix.mSize - 1; j++)
 						for (int k = 0; k <= matrix.mSize - 1; k++)
@@ -224,7 +224,33 @@ class preProcess
 					n = HEncryption.encode(rg.M[j][k]);
 					rg.M[j][k] = n;
 				}
+			ASPE(rg.keyVector);
+					
+			list.remove(i);
+			list.add(i, rg);
+			
 
 		}
 	}
+
+	public static void ASPE(double m[])
+	{
+		double buffer[] = new double[500];
+		int sum;
+		for (int i = 0; i <= 499; i++)
+			buffer[i] = m[i];
+
+		for (int i = 0; i <= 499; i++)
+		{
+			sum = 0;
+			for (int j = 0; j <= 499; j++)
+			{
+				sum += buffer[j] * matrix.transMatrix[j][i];
+			}
+			m[i] = sum;
+
+		}
+
+	}
+
 }
