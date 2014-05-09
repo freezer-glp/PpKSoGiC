@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Stack;
 
-
 class preProcess
 {
 	public static int copyMatrix[][];
@@ -12,12 +11,13 @@ class preProcess
 	public static Stack<Integer> s;
 	public static HashMap<Integer, ArrayList<Integer>> vGraphMap;// 每个顶点出现在哪些r半径图中
 	static rRadiusGraph rg, c1, c2, show;
-	public static long endTime,startTime;
-	
-	public static void getRradiusGraph(int pm[][], int m[][], int debug) throws IOException//提取出搜有r半径子图，存于list中，参数pm为r次幂矩阵，m为r-1次幂矩阵
+	public static long endTime, startTime;
+
+	public static void getRradiusGraph(int pm[][], int m[][], int debug)
+			throws IOException// 提取出搜有r半径子图，存于list中，参数pm为r次幂矩阵，m为r-1次幂矩阵
 	{
-		startTime=System.currentTimeMillis();   //获取开始时间  
-		
+		startTime = System.currentTimeMillis(); // 获取开始时间
+
 		int find, p, num;
 		copyMatrix = new int[matrix.mSize][matrix.mSize];// 原始矩阵的copy
 		s = new Stack<Integer>();
@@ -26,7 +26,7 @@ class preProcess
 		for (int i = 0; i <= matrix.mSize - 1; i++)
 		{
 			s.clear();
-			//find==1 表示找到非子集的元素，该图i是r半径图。
+			// find==1 表示找到非子集的元素，该图i是r半径图。
 			for (int j = 0; j <= matrix.mSize - 1; j++)
 			{
 				if (pm[i][j] == 1)
@@ -36,7 +36,7 @@ class preProcess
 
 			find = 0;
 			num = s.size();
-			
+
 			while (!s.empty())
 			{
 
@@ -44,7 +44,7 @@ class preProcess
 				// System.out.println("p = "+p+" "+s.size());
 				for (int j = 0; j <= matrix.mSize - 1; j++)
 				{
-					if (pm[i][j] == 1 && m[p][j] != 1)//如果不是子集
+					if (pm[i][j] == 1 && m[p][j] != 1)// 如果不是子集
 					{
 						find++;
 						break;
@@ -57,7 +57,7 @@ class preProcess
 			{
 				if (debug == 1)
 					System.out.println("i= " + i);
-				
+
 				for (int k = 0; k <= matrix.mSize - 1; k++)
 					for (int j = 0; j <= matrix.mSize - 1; j++)
 						copyMatrix[k][j] = m[k][j];
@@ -69,14 +69,15 @@ class preProcess
 						s.push(j);
 					}
 
-				while (!s.empty())			//选出该r半径子图
+				while (!s.empty()) // 选出该r半径子图
 				{
 					p = s.pop();
 					// System.out.println("p= "+p);
 					copyMatrix[p][p] = 2;
 				}
 
-				for (int j = 0; j <= matrix.mSize - 1; j++)           //从原图中去除非子图的点
+				for (int j = 0; j <= matrix.mSize - 1; j++)
+					// 从原图中去除非子图的点
 					if (copyMatrix[j][j] != 2)
 					{
 						for (int t = 0; t <= matrix.mSize - 1; t++)
@@ -93,44 +94,46 @@ class preProcess
 				rg = new rRadiusGraph(2, i, copyMatrix);
 				rg.setVector();
 				System.out.println("vector is:");
-				for(int ss = 0;ss <= 499 ; ss++)
+				for (int ss = 0; ss <= 499; ss++)
 					System.out.print(rg.keyVector[ss]);
 				System.out.println();
-				list.add(rg);											//将该子图加入list中
+				list.add(rg); // 将该子图加入list中
 				// System.out.println("size= "+list.size());
 
 			}
 
 		}
-//		showList();
-			
-		removeSame(debug);//将list中拓扑相同的子图去重
+		// showList();
+
+		removeSame(debug);// 将list中拓扑相同的子图去重
 		if (debug == 1)
 		{
 
 			showList();
 			System.out.println("size= " + list.size());
 		}
-		endTime=System.currentTimeMillis(); //获取结束时间  
-		System.out.println("getRradiusGraph时间： "+(endTime-startTime)+"ms");
+		endTime = System.currentTimeMillis(); // 获取结束时间
+		System.out
+				.println("getRradiusGraph时间： " + (endTime - startTime) + "ms");
 
 	}
 
 	public static void removeSame(int debug)
 	{
-		if(debug == 1)
-			System.out.println("befor remove size ="+list.size());
+		if (debug == 1)
+			System.out.println("befor remove size =" + list.size());
 		for (int i = 0; i <= list.size() - 1; i++)
 		{
 			c1 = list.get(i);
 			for (int j = i + 1; j <= list.size() - 1; j++)
 			{
 				c2 = list.get(j);
-				if(debug == 1)
-					System.out.println("i="+i+",id="+c1.id+" j="+j+",id="+c2.id);
-				if (isSame(c1.M, c2.M,debug) == 1)					  //如果两个子图的邻接矩阵完全相同，则为重复的
+				if (debug == 1)
+					System.out.println("i=" + i + ",id=" + c1.id + " j=" + j
+							+ ",id=" + c2.id);
+				if (isSame(c1.M, c2.M, debug) == 1) // 如果两个子图的邻接矩阵完全相同，则为重复的
 				{
-					if(debug == 1)
+					if (debug == 1)
 						System.out.println("same!");
 					list.remove(j);
 					j--;
@@ -140,7 +143,7 @@ class preProcess
 		}
 	}
 
-	public static int isSame(int m1[][], int m2[][],int debug)
+	public static int isSame(int m1[][], int m2[][], int debug)
 	{
 		int same = 1;
 		for (int i = 0; i <= matrix.mSize - 1; i++)
@@ -148,8 +151,8 @@ class preProcess
 			{
 				if (m1[i][j] != m2[i][j])
 				{
-					if(debug == 1)
-						System.out.println(i+"-"+j);
+					if (debug == 1)
+						System.out.println(i + "-" + j);
 					same = 0;
 					return same;
 				}
@@ -157,7 +160,7 @@ class preProcess
 		return same;
 	}
 
-	public static void showList()				//显示所有的r半径子图
+	public static void showList() // 显示所有的r半径子图
 	{
 		for (Iterator<rRadiusGraph> it = list.iterator(); it.hasNext();)
 		{
@@ -173,40 +176,55 @@ class preProcess
 				}
 		}
 	}
-	
+
 	public static void makePrimeMark()
 	{
 		rRadiusGraph rg = null;
-		int count = -1,primeValue;
-		for(int i = 0; i <= 10000; i++)
+		int count = -1, primeValue;
+		for (int i = 0; i <= 10000; i++)
 		{
-			if(createPrime.prime[i] == true)
+			if (createPrime.prime[i] == true)
 			{
-				
-				count++; 			//start from 0
+
+				count++; // start from 0
 				primeValue = i;
-				if(count <= list.size())
+				if (count <= list.size() - 1)
+				{
+					System.out.println("primevalue = "+primeValue);
 					rg = list.get(count);
-				for(int j = 0; j <= matrix.mSize-1; j++)
-					for(int k = 0; k <= matrix.mSize-1; k++)
-					{
-						if(rg.M[j][k] == 1)
-							rg.M[j][k] = primeValue;
-						else
-							rg.M[j][k] = 1;
-					}
-				
-				
+					for (int j = 0; j <= matrix.mSize - 1; j++)
+						for (int k = 0; k <= matrix.mSize - 1; k++)
+						{
+							if (rg.M[j][k] == 1)
+								rg.M[j][k] = primeValue;
+							else
+								rg.M[j][k] = 1;
+						}
+
+					list.remove(count);
+					list.add(count, rg);
+
+				}
 			}
+
 		}
-		
-				
-	}
-	
-//	public static void encode()
-//	{
-//		
+
 	}
 
-	
+	public static void encode()
+	{
+		rRadiusGraph rg = null;
+		int n;
+		for (int i = 0; i <= list.size() - 1; i++)
+		{
+			rg = list.get(i);
+			for (int j = 0; j <= matrix.mSize - 1; j++)
+				for (int k = 0; k <= matrix.mSize - 1; k++)
+				{
+					n = HEncryption.encode(rg.M[j][k]);
+					rg.M[j][k] = n;
+				}
+
+		}
+	}
 }
