@@ -11,6 +11,7 @@ public class PpKSoGiC
 		int radius = 2;
 		//System.out.print("sdf");
 		int ex,dx;
+		client c1;
 //		ex=HEncryption.encode(100);
 //		dx = HEncryption.decode(ex);
 //		System.out.println(dx);
@@ -24,7 +25,23 @@ public class PpKSoGiC
 		preProcess.makePrimeMark();
 		//preProcess.showList();
 		preProcess.encode();
-		preProcess.showList();
+		//preProcess.showList();
+		client.doSearch("file/search.txt");
+		//client.showList();
+		cloud.cloudSearch(0);
+		//cloud.showList();
+		client.showResult();
+		
+		
+//		int a=11,b=11;
+//		int c;
+//		a = HEncryption.encode(a);
+//		b = HEncryption.encode(b);
+//		c = a*b;
+//		System.out.println(c);
+//		c = HEncryption.decode(c);
+//		System.out.println(c);
+		
 	
 	
 	}

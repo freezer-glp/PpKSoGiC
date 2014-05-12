@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -93,10 +94,10 @@ class preProcess
 				rg = null;
 				rg = new rRadiusGraph(2, i, copyMatrix);
 				rg.setVector();
-				System.out.println("vector is:");
-				for (int ss = 0; ss <= 499; ss++)
-					System.out.print(rg.keyVector[ss]);
-				System.out.println();
+//				System.out.println("vector is:");
+//				for (int ss = 0; ss <= 499; ss++)
+//					System.out.print(rg.keyVector[ss]);
+//				System.out.println();
 				list.add(rg); // 将该子图加入list中
 				// System.out.println("size= "+list.size());
 
@@ -143,7 +144,7 @@ class preProcess
 		}
 	}
 
-	public static int isSame(int m1[][], int m2[][], int debug)
+	public static int isSame(BigInteger m1[][], BigInteger m2[][], int debug)
 	{
 		int same = 1;
 		for (int i = 0; i <= matrix.mSize - 1; i++)
@@ -174,12 +175,19 @@ class preProcess
 					else
 						System.out.println(show.M[i][j]);
 				}
+			System.out.println("vector is:");
+			for (int j = 0; j <= 499; j++)
+			{
+				System.out.print(show.keyVector[j]+" ");
+			}
+			System.out.println();
 		}
 	}
 
 	public static void makePrimeMark()
 	{
 		rRadiusGraph rg = null;
+		BigInteger exist = BigInteger.valueOf(1);
 		int count = -1, primeValue;
 		for (int i = 0; i <= 10000; i++)
 		{
@@ -190,15 +198,15 @@ class preProcess
 				primeValue = i;
 				if (count <= list.size() - 1)
 				{
-					System.out.println("primevalue = " + primeValue);
+					//System.out.println("primevalue = " + primeValue);
 					rg = list.get(count);
 					for (int j = 0; j <= matrix.mSize - 1; j++)
 						for (int k = 0; k <= matrix.mSize - 1; k++)
 						{
-							if (rg.M[j][k] == 1)
-								rg.M[j][k] = primeValue;
+							if (rg.M[j][k].equals(exist))
+								rg.M[j][k] = BigInteger.valueOf(primeValue) ;
 							else
-								rg.M[j][k] = 1;
+								rg.M[j][k] = BigInteger.valueOf(1);
 						}
 
 					list.remove(count);
@@ -214,21 +222,25 @@ class preProcess
 	public static void encode()
 	{
 		rRadiusGraph rg = null;
-		int n;
+		BigInteger n;
+		System.out.println("in encode:");
+		
+		
 		for (int i = 0; i <= list.size() - 1; i++)
 		{
 			rg = list.get(i);
 			for (int j = 0; j <= matrix.mSize - 1; j++)
 				for (int k = 0; k <= matrix.mSize - 1; k++)
 				{
+					//System.out.println("in encode:"+rg.M[j][k]);
 					n = HEncryption.encode(rg.M[j][k]);
 					rg.M[j][k] = n;
 				}
+			
 			ASPE(rg.keyVector);
-					
+
 			list.remove(i);
 			list.add(i, rg);
-			
 
 		}
 	}
@@ -236,9 +248,12 @@ class preProcess
 	public static void ASPE(double m[])
 	{
 		double buffer[] = new double[500];
-		int sum;
+		double sum;
 		for (int i = 0; i <= 499; i++)
+		{	
 			buffer[i] = m[i];
+			//System.out.print("m"+m[i]+' ');
+		}
 
 		for (int i = 0; i <= 499; i++)
 		{
@@ -247,7 +262,9 @@ class preProcess
 			{
 				sum += buffer[j] * matrix.transMatrix[j][i];
 			}
+			//System.out.println("sum:"+sum);
 			m[i] = sum;
+			//m[i] = 100;
 
 		}
 
