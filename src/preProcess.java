@@ -189,16 +189,14 @@ class preProcess
 		rRadiusGraph rg = null;
 		BigInteger exist = BigInteger.valueOf(1);
 		int count = -1, primeValue;
-		for (int i = 0; i <= 10000; i++)
+		for (int i = 0; i <= createPrime.primeList.size()-1; i++)
 		{
-			if (createPrime.prime[i] == true)
-			{
-
+			
 				count++; // start from 0
-				primeValue = i;
+				primeValue = createPrime.primeList.get(i);
 				if (count <= list.size() - 1)
 				{
-					//System.out.println("primevalue = " + primeValue);
+					System.out.println("primevalue = " + primeValue);
 					rg = list.get(count);
 					for (int j = 0; j <= matrix.mSize - 1; j++)
 						for (int k = 0; k <= matrix.mSize - 1; k++)
@@ -213,7 +211,7 @@ class preProcess
 					list.add(count, rg);
 
 				}
-			}
+			
 
 		}
 

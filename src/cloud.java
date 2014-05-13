@@ -37,17 +37,12 @@ public class cloud
 		searchVector = new double[500];
 		for (int i = 0; i <= 499; i++)
 			searchVector[i] = client.sVector[i];
-		
+
 		cloudList = new ArrayList<>();
-		cloudList = preProcess.list;	//cloudlist里存着所有的子图
+		cloudList = preProcess.list; // cloudlist里存着所有的子图
 
 		showList();
-		
-		
-		
-		
-		
-		
+
 		for (int i = 0; i <= cloudList.size() - 1; i++)
 		{
 			score = innerProduct(cloudList.get(i).keyVector, searchVector);
@@ -55,20 +50,19 @@ public class cloud
 		}
 
 		Collections.sort(cloudList, cmp);// 已经子图的得分进行排序
-		
-		
+
 		for (int i = 0; i <= cloudList.size() - 1; i++)
 			System.out.println(cloudList.get(i).score);
 
-		for (int i = 0; i <= 4; i++)
+		for (int i = 0; i <= cloudList.size() - 1 && i <= 4; i++)
 		{
 			for (int j = 0; j <= matrix.mSize - 1; j++)
 				for (int k = 0; k <= matrix.mSize - 1; k++)
-					returnM[j][k] = returnM[j][k].multiply(cloudList.get(i).M[j][k]);
+					returnM[j][k] = returnM[j][k]
+							.multiply(cloudList.get(i).M[j][k]);
 		}
-		
-		
-		if (1==6)
+
+		if (1 == 6)
 			for (int i = 0; i <= matrix.mSize - 1; i++)
 				for (int j = 0; j <= matrix.mSize - 1; j++)
 				{
@@ -95,7 +89,7 @@ public class cloud
 		{
 			show = it.next();
 			System.out.println("id= " + show.id);
-			
+
 			for (int i = 0; i <= matrix.mSize - 1; i++)
 				for (int j = 0; j <= matrix.mSize - 1; j++)
 				{
@@ -104,7 +98,7 @@ public class cloud
 					else
 						System.out.println(show.M[i][j]);
 				}
-			
+
 			System.out.println("vector is:");
 			for (int j = 0; j <= 499; j++)
 			{
