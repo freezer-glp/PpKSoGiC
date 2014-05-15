@@ -4,12 +4,12 @@ import java.util.Random;
 
 public class HEncryption		//realization of the Homomorphic Encryption on integer
 {
-	public static BigInteger 
-	p = new BigInteger("510827")
-	,q =  new BigInteger("511787");
+//	public static BigInteger 
+//	p = new BigInteger("510827")
+//	,q =  new BigInteger("511787");
 	//public static int p = 17,q = 13;
 	
-	public static BigInteger encode(BigInteger x)
+	public static BigInteger encode(BigInteger x,BigInteger p,BigInteger q)
 	{
 		//System.out.println("x is:"+x);
 		BigInteger n = q,ran, a = null,b,c = null,ex;
@@ -31,7 +31,7 @@ public class HEncryption		//realization of the Homomorphic Encryption on integer
 		return ex;
 	}
 	
-	public static int decode(BigInteger ex)
+	public static int decode(BigInteger ex,BigInteger p,BigInteger q)
 	{	
 		BigInteger dx,p1,x1,x2,x3;
 		//x1 = new BigInteger("26929039382848046154495490036531200");

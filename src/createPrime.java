@@ -33,7 +33,7 @@ public class createPrime
 			if(prime[i] == true)
 				primeList.add(i);
 		}
-		System.out.println("primesize:"+primeList.size());
+		//System.out.println("primesize:"+primeList.size());
 		// for(int i = 2; i <= 100; i++)
 		// {
 		// if(prime[i])

@@ -21,10 +21,10 @@ class creatTestfiles
 	{
 		int a[][] = new int [size][size];
 		Random r = new Random();
-		File file = new File("testfile/matrix.txt");
+		File file = new File("file/matrix.txt");
 		if(file.exists())
 			file.delete();
-		RandomAccessFile raf = new RandomAccessFile("testfile/matrix.txt", "rw");
+		RandomAccessFile raf = new RandomAccessFile("file/matrix.txt", "rw");
 		for(int i =  0;i <= size-1;i++)
 			for(int j = i;j <= size-1;j++)
 			{
@@ -86,7 +86,7 @@ class creatTestfiles
 		Integer buffer;
 		String bufferString;
 		Random r = new Random();
-		File file = new File("testfile//key.txt");
+		File file = new File("file//key.txt");
 		if(file.exists())
 		{
 			//System.out.println("exist");
@@ -165,10 +165,10 @@ class creatTestfiles
 		Integer buffer;
 		String bufferString;
 		Random r = new Random();
-		File file = new File("testfile/search.txt");
+		File file = new File("file/search.txt");
 		if(file.exists())
 			file.delete();
-		String outFilePath = "testfile//search.txt";
+		String outFilePath = "file//search.txt";
 		BufferedWriter raf = new BufferedWriter(new FileWriter(outFilePath));
 		
 		vkNum = Math.abs(r.nextInt()%5)+1;

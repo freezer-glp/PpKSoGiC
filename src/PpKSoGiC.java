@@ -6,41 +6,34 @@ public class PpKSoGiC
 
 	public static void main(String[] args) throws IOException
 	{
-		int vSize = 12;
+		int vSize = 25;
 		int keySize = 500;
 		int radius = 2;
-		//System.out.print("sdf");
-		int ex,dx;
-		client c1;
-//		ex=HEncryption.encode(100);
-//		dx = HEncryption.decode(ex);
-//		System.out.println(dx);
-//		creatTestfiles.creatKey(12, 500);
+	
+		long startTime=System.currentTimeMillis();   //获取开始时间  
+		//creatTestfiles.creatTest(vSize, keySize);
+		translateFile.creatKey(vSize, keySize);
+		long endTime=System.currentTimeMillis(); //获取结束时间 
+		System.out.println("生成测试文件时间： "+(endTime-startTime)+"ms");
+		
+		startTime=System.currentTimeMillis();   //获取开始时间  
 		createPrime.makePrime();
-		matrix.readMtrix("file/matrix.txt", vSize);
+		
+		matrix.readMtrix("testfile/matrix.txt", vSize);
 		matrix.matrixPower(radius);
-//		matrix.showMatrix('O');
+
 		preProcess.getRradiusGraph(matrix.poweredMatrix, matrix.matrix,0); // 1,showlist
-		//preProcess.showList();
 		preProcess.makePrimeMark();
-		//preProcess.showList();
 		preProcess.encode();
-		//preProcess.showList();
-		client.doSearch("file/search.txt");
-		//client.showList();
+		endTime=System.currentTimeMillis(); //获取结束时间  
+		System.out.println("预处理时间： "+(endTime-startTime)+"ms"); 
+		
+		startTime=System.currentTimeMillis();   //获取开始时间  
+		client.doSearch("testfile/search.txt");
 		cloud.cloudSearch(0);
-		//cloud.showList();
 		client.showResult();
-		
-		
-//		int a=11,b=11;
-//		int c;
-//		a = HEncryption.encode(a);
-//		b = HEncryption.encode(b);
-//		c = a*b;
-//		System.out.println(c);
-//		c = HEncryption.decode(c);
-//		System.out.println(c);
+		endTime=System.currentTimeMillis(); //获取结束时间  
+		System.out.println("查询时间： "+(endTime-startTime)+"ms"); 
 		
 	
 	

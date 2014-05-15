@@ -1,0 +1,99 @@
+0 a1:J.Tom       20
+2 a2:L.Guo         21
+6 a3:V.Hristids     22
+8 a4:Y.James        23
+11 a5:A.Balmin       24
+12 a6:B.Chin         25
+13 a7:F.Lee          26
+16 a8:H.Wang	     27	
+19 a9:V.Jagadish     28
+21 a10:T.Tran        29
+
+
+
+
+1 p1: topology search over biological databases
+       0          1            2        3
+3 p2: xrank:ranked keyword search over xml documents
+         17   4      5      1           6    7  
+4 p3: bidirectional expansion for keyword search on graphs
+           8           9            5       1         10 
+5 p4: finding top-k answer in keyword proximity search
+        19      11    18        5        12       1
+7 p5: efficient ir-style keyword search over relational databases
+          13       14       5       1           15         3 
+9 p6: keyword proximity search on xml graphs
+          5       12      1        6    10
+10 p7: discover:keyword search in relational databases
+          16      5      1          15          3
+14 p8: ranked keyword serch on graphs
+       4      5        1        10
+15 p9: efficient queries from keywords on rdf data
+          13       30           5          31   32 
+17 p10: a lightweight keyword interface to semantic search
+            33           5      34           35       1
+18 p11: scalable semantic web data management using vertical partitioning
+          36       35     37    32                      50         38       
+20 p12: accurate estimation of the degree distribution of private network
+	   39           40                     41                   42      
+22 p13: anonyming weighted social network graphs
+            43                44       42      10         
+23 p14: privacy preserving network publication against structural attacks 
+             45      49       42                                     46         
+24 p15: anonyming bipartite graphs data using safe grouping
+            43        47          10  32               48                
+
+0 topology 
+1 search
+2 biological
+3 databases
+4 ranked 
+5 keyword 
+6 xml
+7 documents
+8 bidirectional
+9 expansion 
+10 graphs
+11 top-k
+12 proximity 
+13 efficient 
+14 ir-style
+15 relational 
+16 discover
+17 xrank
+18 answer 
+19 fingding
+20 J.Tom
+21 L.Guo
+22 V.Hristids
+23 Y.James
+24 A.Balmin
+25 B.Chin
+26 F.Lee
+27 H.Wang
+28 V.Jagadish
+29 T.Tran
+30 query
+31 rdf
+32 data
+33 lightweight
+34 interface
+35 semantic
+36 scalable
+37 web
+38 partitioning
+39 accurate
+40 estimation
+41 distribution
+42 network
+43 anonyming
+44 social
+45 privacy
+46 attacks
+47 bipartite
+48 grouping
+49 preserving
+50 vertical
+
+
+

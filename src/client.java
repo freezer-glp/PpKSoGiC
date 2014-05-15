@@ -2,20 +2,53 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class client
 {
 	public static double sVector[];
 	public static int rMatrix[][];
 	public static ArrayList<Integer[][]> resultList;
+	public static HashMap<String, Integer> keyMap;
+
+	public static void readKeyMap() throws IOException
+	{
+		BufferedReader input = new BufferedReader(new FileReader("testfile/keymap.txt"));
+		keyMap = new HashMap<>();
+		String inbuffer, buffer[];
+		for (inbuffer = input.readLine(); inbuffer != null; inbuffer = input.readLine())
+		{
+			buffer = inbuffer.split(" ");
+			if(keyMap.containsKey(buffer[1]) )
+				System.out.println(buffer[1]+"contained ");
+						
+			keyMap.put(buffer[1], Integer.parseInt(buffer[0]));
+		}
+		// String key;Integer val;
+//		Iterator iter = keyMap.entrySet().iterator();
+//		while (iter.hasNext())
+//		{
+//			Map.Entry entry = (Map.Entry) iter.next();
+//			Object key = entry.getKey();
+//			Object val = entry.getValue();
+//			System.out.println(key+" "+ val	);
+//		}
+		input.close();
+	}
 
 	public static void doSearch(String sfPath) throws IOException
 	{
+		readKeyMap();
+
 		BufferedReader input = new BufferedReader(new FileReader(sfPath));
 		String a, abuffer[] = null;
+		int keyNum;
 		sVector = new double[500];
 		a = input.readLine();
 		abuffer = a.split(" ");
@@ -25,7 +58,11 @@ public class client
 
 		for (int i = 0; i <= abuffer.length - 1; i++)
 		{
-			sVector[Integer.parseInt(abuffer[i])] = 1;
+			if(!keyMap.containsKey(abuffer[i])) //if the key is not exist
+				continue;
+			keyNum = keyMap.get(abuffer[i]);
+			//System.out.println(key "keyNum"	);
+			sVector[keyNum] = 1;
 		}
 
 		sASPE(sVector);
@@ -77,11 +114,13 @@ public class client
 		for (int i = 0; i <= matrix.mSize - 1; i++)
 			for (int j = 0; j <= matrix.mSize - 1; j++)
 			{
-				rMatrix[i][j] = HEncryption.decode(cloud.returnM[i][j]);
+				rMatrix[i][j] = HEncryption.decode(cloud.returnM[i][j],
+						BigInteger.valueOf(preProcess.p),
+						BigInteger.valueOf(preProcess.q));
 				// System.out.println(rMatrix[i][j]);
 			}
 
-		if (1 == 1)
+		if (1 == 0)
 			for (int i = 0; i <= matrix.mSize - 1; i++)
 				for (int j = 0; j <= matrix.mSize - 1; j++)
 				{
@@ -164,9 +203,9 @@ public class client
 				done = 1;
 
 		}
-		
+
 		Collections.sort(resultList, cmp);
-		
+
 		if (1 == 1)
 		{
 			Integer re[][] = new Integer[matrix.mSize][matrix.mSize];
@@ -175,13 +214,17 @@ public class client
 				System.out.println("re is =" + i);
 				re = resultList.get(i);
 				for (int k = 0; k <= matrix.mSize - 1; k++)
-					for (int j = 0; j <= matrix.mSize - 1; j++)
-					{
-						if (j != matrix.mSize - 1)
-							System.out.print(re[k][j] + " ");
-						else
-							System.out.println(re[k][j]);
-					}
+//					for (int j = 0; j <= matrix.mSize - 1; j++)
+//					{
+//						if (j != matrix.mSize - 1)
+//							System.out.print(re[k][j] + " ");
+//						else
+//							System.out.println(re[k][j]);
+//					}
+					if(re[k][k] == 1)
+						System.out.print(k+" ");
+				System.out.println();
+						
 			}
 		}
 
@@ -196,12 +239,12 @@ public class client
 				if (buffer[k][j] != 1)
 				{
 					buffer[k][j] = 1;
-					score ++;
+					score++;
 				}
 				else
 					buffer[k][j] = 0;
 			}
-		
+
 		buffer[matrix.mSize][matrix.mSize] = score;
 
 	}
@@ -236,21 +279,20 @@ public class client
 		return ok;
 	}
 
-	
-	static Comparator<Integer[][]> cmp  = new Comparator<Integer[][]>()
+	static Comparator<Integer[][]> cmp = new Comparator<Integer[][]>()
 	{
 
 		@Override
 		public int compare(Integer[][] o1, Integer[][] o2)
 		{
-			if(o1[matrix.mSize][matrix.mSize] <= o2[matrix.mSize][matrix.mSize])
+			if (o1[matrix.mSize][matrix.mSize] >= o2[matrix.mSize][matrix.mSize])
 				return 1;
 			else
 				return -1;
 		}
-		
+
 	};
-		
+
 	public static void showList()
 	{
 		// System.out.print("aaaaaaaaaaaa");

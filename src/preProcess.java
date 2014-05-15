@@ -13,6 +13,7 @@ class preProcess
 	public static HashMap<Integer, ArrayList<Integer>> vGraphMap;// 每个顶点出现在哪些r半径图中
 	static rRadiusGraph rg, c1, c2, show;
 	public static long endTime, startTime;
+	public static int p,q;
 
 	public static void getRradiusGraph(int pm[][], int m[][], int debug)
 			throws IOException// 提取出搜有r半径子图，存于list中，参数pm为r次幂矩阵，m为r-1次幂矩阵
@@ -94,10 +95,10 @@ class preProcess
 				rg = null;
 				rg = new rRadiusGraph(2, i, copyMatrix);
 				rg.setVector();
-//				System.out.println("vector is:");
-//				for (int ss = 0; ss <= 499; ss++)
-//					System.out.print(rg.keyVector[ss]);
-//				System.out.println();
+				// System.out.println("vector is:");
+				// for (int ss = 0; ss <= 499; ss++)
+				// System.out.print(rg.keyVector[ss]);
+				// System.out.println();
 				list.add(rg); // 将该子图加入list中
 				// System.out.println("size= "+list.size());
 
@@ -105,11 +106,11 @@ class preProcess
 
 		}
 		// showList();
-
+		
 		removeSame(debug);// 将list中拓扑相同的子图去重
 		if (debug == 1)
 		{
-
+			
 			showList();
 			System.out.println("size= " + list.size());
 		}
@@ -178,7 +179,7 @@ class preProcess
 			System.out.println("vector is:");
 			for (int j = 0; j <= 499; j++)
 			{
-				System.out.print(show.keyVector[j]+" ");
+				System.out.print(show.keyVector[j] + " ");
 			}
 			System.out.println();
 		}
@@ -188,32 +189,37 @@ class preProcess
 	{
 		rRadiusGraph rg = null;
 		BigInteger exist = BigInteger.valueOf(1);
+		p = 1;q = 1;
 		int count = -1, primeValue;
-		for (int i = 0; i <= createPrime.primeList.size()-1; i++)
+		for (int i = 0; i <= createPrime.primeList.size() - 1; i++)
 		{
-			
-				count++; // start from 0
-				primeValue = createPrime.primeList.get(i);
-				if (count <= list.size() - 1)
-				{
-					System.out.println("primevalue = " + primeValue);
-					rg = list.get(count);
-					for (int j = 0; j <= matrix.mSize - 1; j++)
-						for (int k = 0; k <= matrix.mSize - 1; k++)
-						{
-							if (rg.M[j][k].equals(exist))
-								rg.M[j][k] = BigInteger.valueOf(primeValue) ;
-							else
-								rg.M[j][k] = BigInteger.valueOf(1);
-						}
 
-					list.remove(count);
-					list.add(count, rg);
+			count++; // start from 0
+			primeValue = createPrime.primeList.get(i);
+			p *= primeValue;
+			if (count <= list.size() - 1)
+			{
+				//System.out.println("primevalue = " + primeValue);
+				rg = list.get(count);
+				for (int j = 0; j <= matrix.mSize - 1; j++)
+					for (int k = 0; k <= matrix.mSize - 1; k++)
+					{
+						if (rg.M[j][k].equals(exist))
+							rg.M[j][k] = BigInteger.valueOf(primeValue);
+						else
+							rg.M[j][k] = BigInteger.valueOf(1);
+					}
 
-				}
-			
+				list.remove(count);
+				list.add(count, rg);
+
+			}
+			else
+				break;
 
 		}
+		
+		q = p * createPrime.primeList.get(count);
 
 	}
 
@@ -221,20 +227,19 @@ class preProcess
 	{
 		rRadiusGraph rg = null;
 		BigInteger n;
-		System.out.println("in encode:");
-		
-		
+		//System.out.println("in encode:");
+
 		for (int i = 0; i <= list.size() - 1; i++)
 		{
 			rg = list.get(i);
 			for (int j = 0; j <= matrix.mSize - 1; j++)
 				for (int k = 0; k <= matrix.mSize - 1; k++)
 				{
-					//System.out.println("in encode:"+rg.M[j][k]);
-					n = HEncryption.encode(rg.M[j][k]);
+					// System.out.println("in encode:"+rg.M[j][k]);
+					n = HEncryption.encode(rg.M[j][k],BigInteger.valueOf(p),BigInteger.valueOf(q));
 					rg.M[j][k] = n;
 				}
-			
+
 			ASPE(rg.keyVector);
 
 			list.remove(i);
@@ -248,9 +253,9 @@ class preProcess
 		double buffer[] = new double[500];
 		double sum;
 		for (int i = 0; i <= 499; i++)
-		{	
+		{
 			buffer[i] = m[i];
-			//System.out.print("m"+m[i]+' ');
+			// System.out.print("m"+m[i]+' ');
 		}
 
 		for (int i = 0; i <= 499; i++)
@@ -260,9 +265,9 @@ class preProcess
 			{
 				sum += buffer[j] * matrix.transMatrix[j][i];
 			}
-			//System.out.println("sum:"+sum);
+			// System.out.println("sum:"+sum);
 			m[i] = sum;
-			//m[i] = 100;
+			// m[i] = 100;
 
 		}
 

@@ -32,7 +32,7 @@ class rRadiusGraph
 	
 	public void setVector() throws IOException
 	{
-		finput = new RandomAccessFile("file/key.txt", "rw");
+		finput = new RandomAccessFile("testfile/key.txt", "rw");
 		BigInteger exist = BigInteger.valueOf(1);
 		int seekNum = 0,keyNum;
 		keyVector =  new double[500];

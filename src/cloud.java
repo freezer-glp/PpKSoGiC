@@ -9,6 +9,7 @@ public class cloud
 	public static ArrayList<rRadiusGraph> cloudList;
 	public static double searchVector[];
 	public static BigInteger returnM[][];
+	public static int topk = 2; // return 0~topk
 
 	static Comparator<rRadiusGraph> cmp = new Comparator<rRadiusGraph>()
 	{
@@ -41,7 +42,7 @@ public class cloud
 		cloudList = new ArrayList<>();
 		cloudList = preProcess.list; // cloudlist里存着所有的子图
 
-		showList();
+		//showList();
 
 		for (int i = 0; i <= cloudList.size() - 1; i++)
 		{
@@ -51,10 +52,10 @@ public class cloud
 
 		Collections.sort(cloudList, cmp);// 已经子图的得分进行排序
 
-		for (int i = 0; i <= cloudList.size() - 1; i++)
-			System.out.println(cloudList.get(i).score);
+//		for (int i = 0; i <= cloudList.size() - 1; i++)  //显示得分
+//			System.out.println(cloudList.get(i).score);
 
-		for (int i = 0; i <= cloudList.size() - 1 && i <= 4; i++)
+		for (int i = 0; i <= cloudList.size() - 1 && i <= topk; i++)
 		{
 			for (int j = 0; j <= matrix.mSize - 1; j++)
 				for (int k = 0; k <= matrix.mSize - 1; k++)
