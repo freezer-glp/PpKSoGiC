@@ -19,53 +19,65 @@ public class client
 
 	public static void readKeyMap() throws IOException
 	{
-		BufferedReader input = new BufferedReader(new FileReader("testfile/keymap.txt"));
+		BufferedReader input = new BufferedReader(new FileReader(
+				"testfile/keymap.txt"));
 		keyMap = new HashMap<>();
 		String inbuffer, buffer[];
-		for (inbuffer = input.readLine(); inbuffer != null; inbuffer = input.readLine())
+		for (inbuffer = input.readLine(); inbuffer != null; inbuffer = input
+				.readLine())
 		{
 			buffer = inbuffer.split(" ");
-			if(keyMap.containsKey(buffer[1]) )
-				System.out.println(buffer[1]+"contained ");
-						
+			if (keyMap.containsKey(buffer[1]))
+				System.out.println(buffer[1] + "contained ");
+
 			keyMap.put(buffer[1], Integer.parseInt(buffer[0]));
 		}
 		// String key;Integer val;
-//		Iterator iter = keyMap.entrySet().iterator();
-//		while (iter.hasNext())
-//		{
-//			Map.Entry entry = (Map.Entry) iter.next();
-//			Object key = entry.getKey();
-//			Object val = entry.getValue();
-//			System.out.println(key+" "+ val	);
-//		}
+		// Iterator iter = keyMap.entrySet().iterator();
+		// while (iter.hasNext())
+		// {
+		// Map.Entry entry = (Map.Entry) iter.next();
+		// Object key = entry.getKey();
+		// Object val = entry.getValue();
+		// System.out.println(key+" "+ val );
+		// }
 		input.close();
 	}
 
-	public static void doSearch(String sfPath) throws IOException
+	public static void doSearch(String searchInput) throws IOException
 	{
 		readKeyMap();
 
-		BufferedReader input = new BufferedReader(new FileReader(sfPath));
+		// BufferedReader input = new BufferedReader(new FileReader(sfPath));
 		String a, abuffer[] = null;
 		int keyNum;
 		sVector = new double[500];
-		a = input.readLine();
+		a = searchInput;
 		abuffer = a.split(" ");
-		input.close();
+		// input.close();
 		for (int i = 0; i <= 499; i++)
 			sVector[i] = 0;
 
 		for (int i = 0; i <= abuffer.length - 1; i++)
 		{
-			if(!keyMap.containsKey(abuffer[i])) //if the key is not exist
+			if (!keyMap.containsKey(abuffer[i])) // if the key is not exist
 				continue;
 			keyNum = keyMap.get(abuffer[i]);
-			//System.out.println(key "keyNum"	);
+			// System.out.println(key "keyNum" );
 			sVector[keyNum] = 1;
 		}
-
+		System.out.println("sVector is:");
+		// for(int i = 0; i <= sVector.length-1 ; i++)
+		// {
+		// if(sVector[i] != 0)
+		// System.out.println(sVector[i]);
+		// }
 		sASPE(sVector);
+//		for (int i = 0; i <= sVector.length - 1; i++)
+//		{
+//			if (sVector[i] != 0)
+//				System.out.println(sVector[i]);
+//		}
 		// showList();
 
 	}
@@ -109,28 +121,31 @@ public class client
 	// decode the matrix returned by the cloud and split the returned matrix
 	public static void showResult()
 	{
-		rMatrix = new int[matrix.mSize][matrix.mSize];
+		if (cloud.noResult != 1) // we have result
+		{
+			rMatrix = new int[matrix.mSize][matrix.mSize];
 
-		for (int i = 0; i <= matrix.mSize - 1; i++)
-			for (int j = 0; j <= matrix.mSize - 1; j++)
-			{
-				rMatrix[i][j] = HEncryption.decode(cloud.returnM[i][j],
-						BigInteger.valueOf(preProcess.p),
-						BigInteger.valueOf(preProcess.q));
-				// System.out.println(rMatrix[i][j]);
-			}
-
-		if (1 == 0)
 			for (int i = 0; i <= matrix.mSize - 1; i++)
 				for (int j = 0; j <= matrix.mSize - 1; j++)
 				{
-					if (j != matrix.mSize - 1)
-						System.out.print(rMatrix[i][j] + " ");
-					else
-						System.out.println(rMatrix[i][j]);
+					rMatrix[i][j] = HEncryption.decode(cloud.returnM[i][j],
+							BigInteger.valueOf(preProcess.p),
+							BigInteger.valueOf(preProcess.q));
+					// System.out.println(rMatrix[i][j]);
 				}
 
-		primeSplit();
+			if (1 == 0)
+				for (int i = 0; i <= matrix.mSize - 1; i++)
+					for (int j = 0; j <= matrix.mSize - 1; j++)
+					{
+						if (j != matrix.mSize - 1)
+							System.out.print(rMatrix[i][j] + " ");
+						else
+							System.out.println(rMatrix[i][j]);
+					}
+
+			primeSplit();
+		}
 
 	}
 
@@ -214,17 +229,17 @@ public class client
 				System.out.println("re is =" + i);
 				re = resultList.get(i);
 				for (int k = 0; k <= matrix.mSize - 1; k++)
-//					for (int j = 0; j <= matrix.mSize - 1; j++)
-//					{
-//						if (j != matrix.mSize - 1)
-//							System.out.print(re[k][j] + " ");
-//						else
-//							System.out.println(re[k][j]);
-//					}
-					if(re[k][k] == 1)
-						System.out.print(k+" ");
+					// for (int j = 0; j <= matrix.mSize - 1; j++)
+					// {
+					// if (j != matrix.mSize - 1)
+					// System.out.print(re[k][j] + " ");
+					// else
+					// System.out.println(re[k][j]);
+					// }
+					if (re[k][k] == 1)
+						System.out.print(k + " ");
 				System.out.println();
-						
+
 			}
 		}
 

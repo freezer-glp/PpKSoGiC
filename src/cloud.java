@@ -10,7 +10,7 @@ public class cloud
 	public static double searchVector[];
 	public static BigInteger returnM[][];
 	public static int topk = 2; // return 0~topk
-
+	public static int noResult = 0;
 	static Comparator<rRadiusGraph> cmp = new Comparator<rRadiusGraph>()
 	{
 
@@ -47,6 +47,7 @@ public class cloud
 		for (int i = 0; i <= cloudList.size() - 1; i++)
 		{
 			score = innerProduct(cloudList.get(i).keyVector, searchVector);
+			//System.out.println(i+" score is:"+score);
 			cloudList.get(i).score = score;
 		}
 
@@ -54,13 +55,21 @@ public class cloud
 
 //		for (int i = 0; i <= cloudList.size() - 1; i++)  //ÏÔÊ¾µÃ·Ö
 //			System.out.println(cloudList.get(i).score);
-
-		for (int i = 0; i <= cloudList.size() - 1 && i <= topk; i++)
+		if(cloudList.get(0).score == 0)
 		{
-			for (int j = 0; j <= matrix.mSize - 1; j++)
-				for (int k = 0; k <= matrix.mSize - 1; k++)
-					returnM[j][k] = returnM[j][k]
-							.multiply(cloudList.get(i).M[j][k]);
+			System.out.println("NO RESULT!");
+			noResult = 1;
+		}
+		else
+		{
+			for (int i = 0; i <= cloudList.size() - 1 && i <= topk; i++)
+			{
+				for (int j = 0; j <= matrix.mSize - 1; j++)
+					for (int k = 0; k <= matrix.mSize - 1; k++)
+						returnM[j][k] = returnM[j][k]
+								.multiply(cloudList.get(i).M[j][k]);
+			}
+			noResult = 0;
 		}
 
 		if (1 == 6)

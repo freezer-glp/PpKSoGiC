@@ -6,10 +6,15 @@ public class PpKSoGiC
 
 	public static void main(String[] args) throws IOException
 	{
+		
+		
+		UI ui = new UI();
+		ui.setupUI();
+		
+		
 		int vSize = 25;
 		int keySize = 500;
 		int radius = 2;
-	
 		long startTime=System.currentTimeMillis();   //获取开始时间  
 		//creatTestfiles.creatTest(vSize, keySize);
 		translateFile.creatKey(vSize, keySize);
@@ -28,14 +33,9 @@ public class PpKSoGiC
 		endTime=System.currentTimeMillis(); //获取结束时间  
 		System.out.println("预处理时间： "+(endTime-startTime)+"ms"); 
 		
-		startTime=System.currentTimeMillis();   //获取开始时间  
-		client.doSearch("testfile/search.txt");
-		cloud.cloudSearch(0);
-		client.showResult();
-		endTime=System.currentTimeMillis(); //获取结束时间  
-		System.out.println("查询时间： "+(endTime-startTime)+"ms"); 
 		
-	
+		
+		
 	
 	}
 
